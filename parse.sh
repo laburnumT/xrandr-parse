@@ -55,6 +55,10 @@ state1_json() {
         local sub_output
 
         sub_output="$(jq '.[. | length - 1]' <<<"${output}")"
+        if grep -Pq "[a-zA-Z]{2}" <<<"${line}"; then
+                echo "${output}"
+                return
+        fi
 
         if grep -Pq "\*" <<<"${line}"; then
                 current="$(grep -Po "\d+\.\d+(?=\+?\*)" <<<"${line}")"
